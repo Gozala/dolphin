@@ -1,0 +1,39 @@
+#!/bin/bash
+
+function getDirectoryPath() {
+  echo $(cd -P -- "$(dirname -- "$1")" && pwd -P)
+}
+
+function getLinkTargetPath() {
+  local dir
+  local link
+  local path=$1
+  while [ -h $path ]; do
+    dir=$(dirname -- "$path")
+    link=$(readlink -- "$path")
+    path=$(cd -- "$dir" && cd -- "$(dirname -- "$link")" && pwd)/$(basename -- "$link")
+  done
+  echo $path
+}
+
+function getScriptDirectorPath() {
+  echo $(getDirectoryPath $(basename $(getLinkTargetPath $0)))
+}
+
+function getApplicationPath() {
+  echo $(getScriptDirectorPath $(getScriptDirectorPath))"/app/application.ini"
+}
+
+#function xulrunner() {
+#local program
+  program=$(which "/Applications/Firefox.app/Contents/MacOS/firefox-bin")
+  if [ ! $(which $program) ]; then program=$(which "firefox"); fi
+  
+  if [ $(which $program) ]; then
+    $program "--app"  $(getApplicationPath) $@
+  else
+    echo "Can't find Firefox"
+  fi
+#}
+
+#$(xulrunner "--app"  $(getApplicationPath) $@)
