@@ -1,0 +1,6 @@
+#!/usr/bin/env dolphin
+
+process.stdout.write('Hello dolphin!\n')
+process.stdout.write('pwd:' + process.cwd() + '\n')
+
+// vim:ft=javascript

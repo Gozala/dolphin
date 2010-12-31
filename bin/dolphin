@@ -17,7 +17,7 @@ function getLinkTargetPath() {
 }
 
 function getScriptDirectorPath() {
-  echo $(getDirectoryPath $(basename $(getLinkTargetPath $0)))
+  echo $(getDirectoryPath $(dirname $(getLinkTargetPath $0)))
 }
 
 function getApplicationPath() {
@@ -28,9 +28,11 @@ function getApplicationPath() {
 #local program
   program=$(which "/Applications/Firefox.app/Contents/MacOS/firefox-bin")
   if [ ! $(which $program) ]; then program=$(which "firefox"); fi
-  
+
   if [ $(which $program) ]; then
-    $program "--app"  $(getApplicationPath) $@
+    export DOLPHIN_CMD_ARGS=$@
+    # export DOLPHIN_STDIN=$(cat /dev/stdin)
+    $program "--app"  $(getApplicationPath $0) $@
   else
     echo "Can't find Firefox"
   fi
