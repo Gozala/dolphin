@@ -24,18 +24,21 @@ function getApplicationPath() {
   echo $(getScriptDirectorPath $(getScriptDirectorPath))"/app/application.ini"
 }
 
-#function xulrunner() {
-#local program
-  program=$(which "/Applications/Firefox.app/Contents/MacOS/firefox-bin")
-  if [ ! $(which $program) ]; then program=$(which "firefox"); fi
+function xulrunner() {
+  local program=$(which "/Applications/Firefox.app/Contents/MacOS/firefox-bin")
+  if [ ! $program ]; then program=$(which "firefox"); fi
+  if [ $program ]; then program="$program --app"; fi
+  echo $program
+}
 
-  if [ $(which $program) ]; then
+function dolphin() {
+  if [ "$(xulrunner)" ]; then
     export DOLPHIN_CMD_ARGS=$@
     # export DOLPHIN_STDIN=$(cat /dev/stdin)
-    $program "--app"  $(getApplicationPath $0) $@
+    $(xulrunner) $(getApplicationPath) $0 $@
   else
-    echo "Can't find Firefox"
+    echo "Firefox not found!"
   fi
-#}
+}
 
-#$(xulrunner "--app"  $(getApplicationPath) $@)
+echo $(dolphin $@)
