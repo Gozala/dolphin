@@ -6,6 +6,10 @@
 
     npm install dolphin
 
+## Examples ##
+
+    ./examples/hello-world
+
 ## Prior art ##
 
 - [xulrunner engine][narwhal-xulrunner] for [narwhal]
