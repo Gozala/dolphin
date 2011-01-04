@@ -3,5 +3,6 @@
 process.stdout.write('Hello Dolphin!\n')
 process.stdout.write('pwd > ' + process.cwd() + '\n')
 process.stdout.write('args > ' + process.argv.join(', ') + '\n')
+throw new Error("Hello exception");
 
 // vim:ft=javascript

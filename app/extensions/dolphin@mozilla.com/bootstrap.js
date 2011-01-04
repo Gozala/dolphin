@@ -36,7 +36,7 @@ function read(path) {
 
 function getModuleSource(path) {
   let source = read(path)
-  if ('#' === source.charAt(0)) source = '//' + source
+  if ('#' === source.charAt(0)) source = '// ' + source
   return source
 }
 
@@ -78,7 +78,8 @@ function startup(data, reason) {
   let sandbox = Cu.Sandbox(principal)
   sandbox.process = process
   let path = process.argv[1]
-  Cu.evalInSandbox(getModuleSource(path), sandbox, "1.8", path, 0)
+  let file = File(path)
+  Cu.evalInSandbox(getModuleSource(path), sandbox, "1.8", 'file://' + file.path, 1)
 }
 
 function shutdown(data, reason) {
