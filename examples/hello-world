@@ -1,8 +1,15 @@
 #!/usr/bin/env dolphin
 
-process.stdout.write('Hello Dolphin!\n')
-process.stdout.write('pwd > ' + process.cwd() + '\n')
-process.stdout.write('args > ' + process.argv.join(', ') + '\n')
-throw new Error("Hello exception");
+function print() {
+  process.stdout.write(Array.prototype.join.call(arguments, ' ') + '\n')
+}
+
+print('Hello Dolphin!\n')
+print('module >', module.id, module.filename, module.exports)
+print('pwd > ' + process.cwd() + '\n')
+print('args > ' + process.argv.join(', ') + '\n')
+print('Components > ' + Components + ' or ' + this.Components + '\n')
+print('this > ' + Object.keys(this) + '\n')
+print(read('/Users/gozala/Projects/dolphin/package.json'))
 
 // vim:ft=javascript
